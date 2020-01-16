@@ -8,20 +8,15 @@ function Ship(stage) {
   this.speed = 5; //Speed of the player
   this.drop = null;
   this.lives = 3; //Initial lives
-  this.score = 0; //Player's score
   this.alive = true;
-  this.control = true;
 
   var map = {68: false, 39: false, 65: false, 37: false, 32: false}; //Map of controls
 
   this.update = function() { // Update function for player
-    if (this.alive && this.control) { //Update only if alive
+    if (this.alive) { //Update only if alive
       this.sprite.position.x += this.direction * this.speed; //Make the player move
       if (this.sprite.position.x < 0) this.sprite.position.x = 0; //Invisible wall on the left side of the screen
       if (this.sprite.position.x > window.innerWidth - this.sprite.width) this.sprite.position.x = window.innerWidth - this.sprite.width; //Invisible wall on the right side of the screen
-    } else if (this.alive && this.control == false) { //Fly away
-      this.speed += 0.005;
-      this.sprite.position.y -= this.speed;
     }
     if (this.drop) { //Check if bullet exists
       this.drop.update(); //Update bullet
@@ -36,9 +31,7 @@ function Ship(stage) {
     if (e.keyCode in map) {
       map[e.keyCode] = false;
     }
-    if (e.keyCode != 32) { //if its not space bar
-      this.direction = 0; //Player stops moving
-    }
+    this.direction = 0; //Player stops moving
   }
 
 this.onKeyDown = function(e) {
@@ -55,7 +48,6 @@ this.onKeyDown = function(e) {
       }
       if (map[32] && this.drop == null) { //Shoot
         this.drop = new Drop(this.sprite.position.x + this.sprite.width/2, this.sprite.position.y); //Create new bullet
-        this.drop.speed = 8;
         stage.addChild(this.drop.sprite);
       }
     }
