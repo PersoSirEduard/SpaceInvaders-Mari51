@@ -5,6 +5,8 @@ var assets = [ //INSERT ALL ASSETS INCLUDING IMAGES AND SOUNDS HERE
   "assets/textures/aliens/crab1.png",
   "assets/textures/aliens/squid0.png",
   "assets/textures/aliens/squid1.png",
+  "assets/textures/aliens/ant0.png",
+  "assets/textures/aliens/ant1.png",
   "assets/textures/explosion/exp0.png",
   "assets/textures/explosion/exp1.png",
   "assets/textures/explosion/exp2.png",
@@ -14,7 +16,8 @@ var assets = [ //INSERT ALL ASSETS INCLUDING IMAGES AND SOUNDS HERE
   "assets/textures/explosion/exp6.png",
   "assets/textures/explosion/exp7.png",
   "assets/textures/explosion/exp8.png",
-  "assets/textures/explosion/exp9.png"
+  "assets/textures/explosion/exp9.png",
+  "assets/textures/mari51.png"
 ];
 
 const game = new PIXI.Application({ //New PIXI engine container
@@ -24,6 +27,7 @@ const game = new PIXI.Application({ //New PIXI engine container
   antialias: true
 });
 
+game.play = false; //Wait until player is ready
 var player; //Player spaceship
 var ui; //User interface
 var aliens = []; //Alien array
@@ -31,6 +35,8 @@ var level = 4; //Game's level
 var starsCount = 100; //Number of stars in the background
 var starSpeed = 2; //How fast the stars are moving
 var particleContainer = new PIXI.ParticleContainer(); //Particle system for stars
+var victoryScreen; //Victory screen when player wins
+var waitingInputScreen;
 
 document.body.appendChild(game.view); //Add canvas to html body
 window.addEventListener('resize', resize); //Window resize event
@@ -70,7 +76,20 @@ function setup() { //Assets ready
   game.stage.addChild(player.sprite); //Add spaceship to scene
 
   ui = new Interface(player); //Create new interface
-  game.stage.addChild(ui.container);
+  game.stage.addChild(ui.statusContainer);
+  game.stage.addChild(ui.scoreContainer);
+
+  victoryScreen = new VictoryDisplay();
+  game.stage.addChild(victoryScreen.sprite);
+
+  waitingInputScreen = new PIXI.Text("Press Space to start\nAppuie sur Espace pour commencer", {
+    fontFamily: "AdvancedPixelFont",
+    fontSize: 60,
+    fill : 0xffffff,
+    align: "center"
+  });
+  waitingInputScreen.position = new PIXI.Point(window.innerWidth/2 - waitingInputScreen.width/2, window.innerHeight/2 + waitingInputScreen.height/2);
+  game.stage.addChild(waitingInputScreen);
 
   aliens = summonAliens(level, player, game.stage); //Create aliens
   for (let a = 0; a < aliens.length; a++) { //Initialize each alien
@@ -85,6 +104,8 @@ function setup() { //Assets ready
 
 function update(delta) { //Update function
   player.update(); //Update player position and controls
+  if (game.play) {
+  waitingInputScreen.visible = false;
   if (player.lives <= 0 && player.alive) { //Check if player is dead
     game.stage.addChild(Explosion(player.sprite.position.x, player.sprite.position.y, 100, 100)); //Spawn explosion
     player.alive = false;
@@ -94,14 +115,21 @@ function update(delta) { //Update function
       green: new PIXI.Point(-10, 4),
       blue: new PIXI.Point(10, -4),
       slices: 12
-    })]; //Add end screen filter
-    var deadLabelBig = new PIXI.Text("ERROR: GAME OVER", {
+    })]; //Add game over screen filter
+    var deadLabelBig = new PIXI.Text("ERROR/ERREUR: GAME OVER", { //Game over message
         fontFamily: "AdvancedPixelFont",
         fontSize: 100,
         fill : 0xd91431
     });
     deadLabelBig.position = new PIXI.Point(window.innerWidth/2 - deadLabelBig.width/2, window.innerHeight/2 - deadLabelBig.height/2)
     game.stage.addChild(deadLabelBig);
+  }
+  if (aliens.length <= 0) { //Check if all aliens died (player wins)
+    player.control = false; //Stop control input
+    victoryScreen.sprite.visible = true; //Make victory screen visible
+    if (player.sprite.position.y >= 0) {
+    starSpeed += 0.3; //Speed up background
+    }
   }
   for (let i = 0; i < particleContainer.children.length; ++i) { //Update for each star
     let particle = particleContainer.children[i];
@@ -121,8 +149,8 @@ function update(delta) { //Update function
         aliens[a].alien.damage(player.drop.damage); //Damage alien
         player.drop.evaporate(); //Destroy bullet
         if (aliens[a].alien.alive == false) { //Check if alien is alive
-          game.stage.addChild(Explosion(aliens[a].alien.sprite.position.x + aliens[a].alien.sprite.width/2, aliens[a].alien.sprite.position.y, 60, 60));
-          aliens[a].alien.destroy();
+          aliens[a].alien.destroy(); //Kill alien
+          player.score += aliens[a].alien.activity * 10000; //Update player's score
           if (aliens[a].alien.drop) {
             aliens[a].alien.drop.sprite.destroy(); //Destroy tile
             delete aliens[a].alien.drop; //Destroy drop
@@ -139,6 +167,8 @@ function update(delta) { //Update function
     }
   }
   ui.update(); //Update interface
+  victoryScreen.update(delta); //Update victory screen when activated
+  }
 }
 
 function render(delta) { //Render function

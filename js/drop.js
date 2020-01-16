@@ -46,6 +46,7 @@ function Explosion(x, y, w, h) {
   sprite.animationSpeed = 0.2; //Animation speed
   sprite.play(); //Play the animation in loop
   sprite.filters = [new PIXI.filters.CRTFilter()]; //Apply filter
+  PIXI.Loader.shared.resources["assets/sounds/explosion.ogg"].audio.play();
 
   sprite.onComplete = function() {
     sprite.destroy();
