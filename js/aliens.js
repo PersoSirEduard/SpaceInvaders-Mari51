@@ -84,7 +84,7 @@ function Alien(textures, player, stage) {
 }
 
 function summonAliens(level, player, stage) {
-  var maxPerLine = 8;
+  var maxPerLine = 7;
   var initialHeight = 50;
   var aliens = [];
   var currentLine = 0;
