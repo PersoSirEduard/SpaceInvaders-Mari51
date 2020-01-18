@@ -31,7 +31,7 @@ function Alien(textures, player, stage) {
   this.sprite.autoUpdate = true;
   this.sprite.animationSpeed = 0.04; //Animation speed
   this.sprite.play(); //Play the animation in loop
-  this.speed = 0.90; //Speed of alien
+  this.speed = 1; //Speed of alien
   this.direction = 1; //Direction of alien
   this.health = 1; //Alien's health
   this.alive = true; //Alien's status
