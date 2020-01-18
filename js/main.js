@@ -31,7 +31,7 @@ game.play = false; //Wait until player is ready
 var player; //Player spaceship
 var ui; //User interface
 var aliens = []; //Alien array
-var level = 4; //Game's level
+var level = 3; //Game's level
 var starsCount = 100; //Number of stars in the background
 var starSpeed = 2; //How fast the stars are moving
 var particleContainer = new PIXI.ParticleContainer(); //Particle system for stars
