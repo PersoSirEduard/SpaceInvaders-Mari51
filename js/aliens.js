@@ -42,7 +42,7 @@ function Alien(textures, player, stage) {
   this.update = function() {
     this.sprite.position.x += this.direction * this.speed; //Move alien
     this.activity += 0.000001; //Make it more difficult with time
-    if (this.sprite.position.y >= window.innerHeight) player.lives -= 1; //Damage player if touch bottom of screen
+    if (this.sprite.position.y >= settings.screenHeight) player.lives -= 1; //Damage player if touch bottom of screen
     if (this.drop == null) { //Check if drop exists
       let rdm = Math.random(); //Random event chance
       if (rdm <= this.activity) { //Check activity of alien
@@ -85,7 +85,7 @@ function Alien(textures, player, stage) {
 }
 
 function summonAliens(level, player, stage) {
-  var maxPerLine = 15;
+  var maxPerLine = settings.maxAliensPerLine;
   var initialHeight = 50;
   var aliens = [];
   var currentLine = 0;
@@ -107,7 +107,7 @@ function summonAliens(level, player, stage) {
       alien = new Aliens.AlienAnt(player, stage);
     }
     alien.alien.sprite.position.y = initialHeight + currentLine * alien.alien.sprite.height;
-    alien.alien.sprite.position.x = window.innerWidth/2 - (maxPerLine*alien.alien.sprite.width)/2 + currentLinePopulation * alien.alien.sprite.width;
+    alien.alien.sprite.position.x = settings.screenWidth/2 - (maxPerLine*alien.alien.sprite.width)/2 + currentLinePopulation * alien.alien.sprite.width;
     currentLinePopulation++;
     aliens.push(alien);
   }

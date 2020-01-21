@@ -2,8 +2,8 @@ function Ship(stage) {
   this.sprite = new PIXI.Sprite(PIXI.Loader.shared.resources["assets/textures/spaceship.png"].texture);
   this.sprite.width = 75;
   this.sprite.height = 75;
-  this.sprite.position.x = (window.innerWidth - this.sprite.width)/2; //Center player
-  this.sprite.position.y = window.innerHeight - this.sprite.height; //Set player at the bottom of the screen
+  this.sprite.position.x = (settings.screenWidth - this.sprite.width)/2; //Center player
+  this.sprite.position.y =settings.screenHeight - this.sprite.height; //Set player at the bottom of the screen
   this.direction = 0; //Direction of movement
   this.speed = 5; //Speed of the player
   this.drop = null;
@@ -18,7 +18,7 @@ function Ship(stage) {
     if (this.alive && this.control) { //Update only if alive
       this.sprite.position.x += this.direction * this.speed; //Make the player move
       if (this.sprite.position.x < 0) this.sprite.position.x = 0; //Invisible wall on the left side of the screen
-      if (this.sprite.position.x > window.innerWidth - this.sprite.width) this.sprite.position.x = window.innerWidth - this.sprite.width; //Invisible wall on the right side of the screen
+      if (this.sprite.position.x > settings.screenWidth - this.sprite.width) this.sprite.position.x = settings.screenWidth - this.sprite.width; //Invisible wall on the right side of the screen
     } else if (this.alive && this.control == false) { //Fly away
       this.speed += 0.005;
       this.sprite.position.y -= this.speed;

@@ -21,8 +21,8 @@ var assets = [ //INSERT ALL ASSETS INCLUDING IMAGES AND SOUNDS HERE
 ];
 
 const game = new PIXI.Application({ //New PIXI engine container
-  width: window.innerWidth,
-  height: window.innerHeight,
+  width: settings.screenWidth,
+  height: settings.screenHeight,
   autoResize: true,
   antialias: true
 });
@@ -31,7 +31,7 @@ game.play = false; //Wait until player is ready
 var player; //Player spaceship
 var ui; //User interface
 var aliens = []; //Alien array
-var level = 3; //Game's level
+var level = settings.level; //Game's level
 var starsCount = 100; //Number of stars in the background
 var starSpeed = 2; //How fast the stars are moving
 var particleContainer = new PIXI.ParticleContainer(); //Particle system for stars
@@ -42,7 +42,7 @@ document.body.appendChild(game.view); //Add canvas to html body
 window.addEventListener('resize', resize); //Window resize event
 
 function resize() { //Resize Event
-  game.renderer.resize(window.innerWidth, window.innerHeight);
+  game.renderer.resize(settings.screenWidth, settings.screenheight);
 }
 
 document.addEventListener('keydown', onKeyDown); //Key press event
@@ -66,7 +66,7 @@ function setup() { //Assets ready
     let starSize = Math.random() * 5; //Random size for star
     starSprite.width = starSize;
     starSprite.height = starSize;
-    starSprite.position = new PIXI.Point(Math.random() * window.innerWidth, Math.random() * window.innerHeight); //Random position for star on screen
+    starSprite.position = new PIXI.Point(Math.random() * settings.screenWidth, Math.random() * settings.screenHeight); //Random position for star on screen
     starSprite.parallaxFactor = Math.random(); //Parallax effect
     particleContainer.addChild(starSprite); //Add star to particle container
   }
@@ -88,7 +88,7 @@ function setup() { //Assets ready
     fill : 0xffffff,
     align: "center"
   });
-  waitingInputScreen.position = new PIXI.Point(window.innerWidth/2 - waitingInputScreen.width/2, window.innerHeight/2 + waitingInputScreen.height/2);
+  waitingInputScreen.position = new PIXI.Point(settings.screenWidth/2 - waitingInputScreen.width/2, settings.screenHeight/2 + waitingInputScreen.height/2);
   game.stage.addChild(waitingInputScreen);
 
   aliens = summonAliens(level, player, game.stage); //Create aliens
@@ -121,7 +121,7 @@ function update(delta) { //Update function
         fontSize: 100,
         fill : 0xd91431
     });
-    deadLabelBig.position = new PIXI.Point(window.innerWidth/2 - deadLabelBig.width/2, window.innerHeight/2 - deadLabelBig.height/2)
+    deadLabelBig.position = new PIXI.Point(settings.screenWidth/2 - deadLabelBig.width/2, settings.screenHeight/2 - deadLabelBig.height/2)
     game.stage.addChild(deadLabelBig);
   }
   if (aliens.length <= 0) { //Check if all aliens died (player wins)
@@ -134,13 +134,13 @@ function update(delta) { //Update function
   for (let i = 0; i < particleContainer.children.length; ++i) { //Update for each star
     let particle = particleContainer.children[i];
     particle.position.y += particle.parallaxFactor + starSpeed; //Update position of star
-    if (particle.position.y > window.innerHeight + particle.height) particle.position.y = 0; //Teleport star at top if reach bottom
+    if (particle.position.y > settings.screenHeight + particle.height) particle.position.y = 0; //Teleport star at top if reach bottom
   }
 
   var hitWall = false; //Variable to check if an alien hit a wall
   for (let a = 0; a < aliens.length; a++) { //Update each alien
     aliens[a].alien.update(); //Update alien
-    if (aliens[a].alien.sprite.position.x <= 0 || aliens[a].alien.sprite.position.x >= window.innerWidth - aliens[a].alien.sprite.width) { //Check if an alien hit a wall
+    if (aliens[a].alien.sprite.position.x <= 0 || aliens[a].alien.sprite.position.x >= settings.screenWidth - aliens[a].alien.sprite.width) { //Check if an alien hit a wall
       hitWall = true;
     }
     if (player.drop) { //Check if bullet exists within player

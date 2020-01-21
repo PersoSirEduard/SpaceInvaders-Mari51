@@ -16,7 +16,7 @@ function Drop(x, y) {
   this.update = function() {
     this.sprite.position.y -= this.speed;
     if (this.sprite.position.y < -this.sprite.height) this.evaporate(); //Evaporate if reach top of screen
-    if (this.sprite.position.y > window.innerHeight) this.evaporate(); //Evaporate if reach bottom of screen
+    if (this.sprite.position.y > settings.screenHeight) this.evaporate(); //Evaporate if reach bottom of screen
   };
 
   this.distanceFrom = function(point) { //Returns distance from object

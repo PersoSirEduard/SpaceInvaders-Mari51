@@ -29,7 +29,7 @@ function Interface(player) {
   this.label.position.y = this.statusContainer.height - this.label.height; //Adjust position of label
   this.deadLabel.position.y = this.label.position.y; //Adjust position of label
   this.deadLabel.position.x = this.label.position.x + this.label.width; //Adjust position of label
-  this.statusContainer.position.x = window.innerWidth - this.statusContainer.width; //Adjust position of ui
+  this.statusContainer.position.x = settings.screenWidth - this.statusContainer.width; //Adjust position of ui
 
   this.scoreLabel = new PIXI.Text("Score: 0", style);
   this.scoreContainer.addChild(this.scoreLabel);
@@ -51,9 +51,9 @@ function Interface(player) {
 
 function VictoryDisplay() {
   this.sprite = new PIXI.Sprite(PIXI.Loader.shared.resources["assets/textures/mari51.png"].texture); //Create sprite with logo
-  this.sprite.width = 0.6 * window.innerWidth;
+  this.sprite.width = 0.6 * settings.screenWidth;
   this.sprite.height = this.sprite.width;
-  this.sprite.position.x = window.innerWidth/2 - this.sprite.width/2;
+  this.sprite.position.x = settings.screenWidth/2 - this.sprite.width/2;
   this.sprite.position.y = -this.sprite.height;
   this.sprite.visible = false;
   this.deltaColor = 0;
@@ -66,7 +66,7 @@ function VictoryDisplay() {
         this.sprite.tint = this.randomColor();
         this.deltaColor = 0;
       }
-      if (this.sprite.position.y + this.sprite.height/2 < window.innerHeight/2) {
+      if (this.sprite.position.y + this.sprite.height/2 < settings.screenHeight/2) {
         this.sprite.position.y += 3;
       }
     }
