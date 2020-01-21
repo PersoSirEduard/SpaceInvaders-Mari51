@@ -1,5 +1,5 @@
 var settings = {
-	screenWidth: 700,
+	screenWidth:  window.innerWidth,
 	screenHeight: window.innerHeight,
 	level: 3,
 	maxAliensPerLine: 10
