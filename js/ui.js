@@ -12,9 +12,9 @@ function Interface(player) {
       fontSize: 35,
       fill : 0xd91431
   });
-  this.label = new PIXI.Text("Status: ", style); //Display text
+  this.label = new PIXI.Text("Status/État: ", style); //Display text
   this.statusContainer.addChild(this.label);
-  this.deadLabel = new PIXI.Text("DEAD", deadStyle); //Death message
+  this.deadLabel = new PIXI.Text("DEAD/MORT", deadStyle); //Death message
   this.deadLabel.visible = false; //Invisible death message
   this.statusContainer.addChild(this.deadLabel);
   this.sprites = []; //Lives icons (according to player's health)
