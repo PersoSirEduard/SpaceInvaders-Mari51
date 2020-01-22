@@ -31,7 +31,7 @@ function Interface(player) {
   this.deadLabel.position.x = this.label.position.x + this.label.width; //Adjust position of label
   this.statusContainer.position.x = settings.screenWidth - this.statusContainer.width; //Adjust position of ui
 
-  this.scoreLabel = new PIXI.Text("Score: 0", style);
+  this.scoreLabel = new PIXI.Text("Points: 0", style);
   this.scoreContainer.addChild(this.scoreLabel);
   this.scoreContainer.position = new PIXI.Point(0, 0);
 
