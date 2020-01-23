@@ -55,6 +55,16 @@ this.onKeyDown = function(e) {
       }
       if (map[32] && this.drop == null) { //Shoot
         this.drop = new Drop(this.sprite.position.x + this.sprite.width/2, this.sprite.position.y); //Create new bullet
+        var rdmSoundEffect = Math.random();
+        if (rdmSoundEffect < 0.33) {
+           PIXI.Loader.shared.resources["assets/sounds/laser1.mp3"].data.play();
+        }
+        if (rdmSoundEffect >= 0.33 && rdmSoundEffect < 0.66) {
+           PIXI.Loader.shared.resources["assets/sounds/laser2.mp3"].data.play();
+        }
+        if (rdmSoundEffect >= 0.66 && rdmSoundEffect <= 1) {
+           PIXI.Loader.shared.resources["assets/sounds/laser3.mp3"].data.play();
+        }
         this.drop.speed = 8;
         stage.addChild(this.drop.sprite);
         game.play = true; //Start game if not already
