@@ -114,7 +114,7 @@ function update(delta) { //Update function
   if (game.play) {
   waitingInputScreen.visible = false;
   if (player.lives <= 0 && player.alive) { //Check if player is dead
-    PIXI.Loader.shared.resources["assets/sounds/death_player.mp3"].sound.play(); //Play death sound effect for player
+    PIXI.Loader.shared.resources["assets/sounds/death_player.mp3"].data.play() //Play death sound effect for player
     game.stage.addChild(Explosion(player.sprite.position.x, player.sprite.position.y, 100, 100)); //Spawn explosion
     player.alive = false;
     player.sprite.visible = false; //Make player invisible
