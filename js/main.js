@@ -17,7 +17,14 @@ var assets = [ //INSERT ALL ASSETS INCLUDING IMAGES AND SOUNDS HERE
   "assets/textures/explosion/exp7.png",
   "assets/textures/explosion/exp8.png",
   "assets/textures/explosion/exp9.png",
-  "assets/textures/mari51.png"
+  "assets/textures/mari51.png",
+  "assets/sounds/death_alien.mp3",
+  "assets/sounds/death_player.mp3",
+  "assets/sounds/hit_alien.mp3",
+  "assets/sounds/hit_player.mp3",
+  "assets/sounds/laser1.mp3",
+  "assets/sounds/laser2.mp3",
+  "assets/sounds/laser3.mp3"
 ];
 
 const game = new PIXI.Application({ //New PIXI engine container
@@ -107,6 +114,7 @@ function update(delta) { //Update function
   if (game.play) {
   waitingInputScreen.visible = false;
   if (player.lives <= 0 && player.alive) { //Check if player is dead
+    PIXI.Loader.shared.resources["assets/sounds/death_player.mp3"].sound.play(); //Play death sound effect for player
     game.stage.addChild(Explosion(player.sprite.position.x, player.sprite.position.y, 100, 100)); //Spawn explosion
     player.alive = false;
     player.sprite.visible = false; //Make player invisible
