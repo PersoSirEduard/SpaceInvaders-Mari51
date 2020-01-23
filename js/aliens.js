@@ -69,6 +69,7 @@ function Alien(textures, player, stage) {
   this.damage = function(value) { //Damage alien
     this.health -= value;
     stage.addChild(Explosion(this.sprite.position.x + this.sprite.width/2, this.sprite.position.y, 30, 30));
+    PIXI.Loader.shared.resources["assets/sounds/hit_alien.mp3"].data.play(); //Damage alien sound effect
     if (this.health <= 0) { //If 0 or negative then alien dies
       this.destroy();
     }
