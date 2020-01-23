@@ -57,12 +57,15 @@ this.onKeyDown = function(e) {
         this.drop = new Drop(this.sprite.position.x + this.sprite.width/2, this.sprite.position.y); //Create new bullet
         var rdmSoundEffect = Math.random();
         if (rdmSoundEffect < 0.33) {
+           PIXI.Loader.shared.resources["assets/sounds/laser1.mp3"].data.volume = 0.6;
            PIXI.Loader.shared.resources["assets/sounds/laser1.mp3"].data.play();
         }
         if (rdmSoundEffect >= 0.33 && rdmSoundEffect < 0.66) {
+           PIXI.Loader.shared.resources["assets/sounds/laser2.mp3"].data.volume = 0.6;
            PIXI.Loader.shared.resources["assets/sounds/laser2.mp3"].data.play();
         }
         if (rdmSoundEffect >= 0.66 && rdmSoundEffect <= 1) {
+           PIXI.Loader.shared.resources["assets/sounds/laser3.mp3"].data.volume = 0.6;
            PIXI.Loader.shared.resources["assets/sounds/laser3.mp3"].data.play();
         }
         this.drop.speed = 8;
