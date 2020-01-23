@@ -53,6 +53,7 @@ function Alien(textures, player, stage) {
       if (this.drop.distanceFrom(new PIXI.Point(player.sprite.position.x + player.sprite.width/2, player.sprite.position.y + player.sprite.height/2)) <= player.sprite.width/2) { //Check if hit playerSprite
         player.lives -= this.drop.damage; //Damage player
         stage.addChild(Explosion(this.drop.sprite.position.x, this.drop.sprite.position.y, 50, 50));
+        PIXI.Loader.shared.resources["assets/sounds/hit_player.mp3"].data.play(); //Damage player sound effect
         this.drop.toDelete = true;
       }
       if (this.drop.toDelete) { //Check if drop hit
@@ -75,6 +76,7 @@ function Alien(textures, player, stage) {
   this.destroy = function() { //Kill alien
     this.alive = false;
     stage.addChild(Explosion(this.sprite.position.x, this.sprite.position.y, 60, 60));
+    PIXI.Loader.shared.resources["assets/sounds/death_alien.mp3"].data.play(); //Death alien sound effect
   }
   this.attack = function() { //Alien shooting
     this.drop = new Drop(this.sprite.position.x, this.sprite.position.y); //Create new drop
