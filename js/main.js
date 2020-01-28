@@ -1,3 +1,19 @@
+/*
+  ====================================================================
+   -- Space Invaders for Mari51 --
+   By Eduard Anton (AKA NextLight) and designed according to Ninja
+   Created on January 17 2020
+   Last Modified on January 27 2020
+   
+   Description:
+    Simple replica of the classic retro game Space Invaders made in
+    JavaScript with the help of the PIXI.js game engine for web
+    browsers. This project is specifically dedicated for 
+    Marianopolis' Robotics team (Mari51 2020).
+    Website: http://robotics.marianopolis.edu/en/home.html
+  ====================================================================
+*/
+
 var assets = [ //INSERT ALL ASSETS INCLUDING IMAGES AND SOUNDS HERE
   "assets/textures/spaceship.png",
   "assets/textures/star.png",
