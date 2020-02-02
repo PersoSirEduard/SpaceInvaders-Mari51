@@ -65,7 +65,7 @@ document.body.appendChild(game.view); //Add canvas to html body
 window.addEventListener('resize', resize); //Window resize event
 
 function resize() { //Resize Event
-  game.renderer.resize(settings.screenWidth, settings.screenheight);
+  game.renderer.resize(settings.screenWidth, settings.screenHeight);
 }
 
 document.addEventListener('keydown', onKeyDown); //Key press event
